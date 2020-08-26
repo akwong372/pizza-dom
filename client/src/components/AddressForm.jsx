@@ -1,9 +1,12 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 
 const AddressForm = props => {
+    let history = useHistory()
+    console.log(history)
     return (
         <div>
-            <form onSubmit={props.handleSubmit}>
+            <form onSubmit={e=> {e.persist(); props.handleSubmit(e, history)}}>
                 <div>
                     <label htmlFor='street'>Street: </label>
                     <input type='text' id='street' placeholder='street' />
@@ -20,9 +23,8 @@ const AddressForm = props => {
                     <label htmlFor='zipcode'>Zipcode: </label>
                     <input type='text' id='zipcode' placeholder='zipcode' />
                 </div>
-                <button>submit</button>
+                <button type='submit'>submit</button>
             </form>
-            <a href='/test'>test</a>
         </div>
     )
 }

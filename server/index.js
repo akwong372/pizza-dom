@@ -4,15 +4,12 @@ const bodyParser = require('body-parser');
 const pizzapi = require('pizzapi');
 const port = process.env.PORT || 5000;
 
+let order = new pizzapi.Order();
+let customer = null;
+
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    // myStore.getMenu(
-    //     (data) => {
-    //         res.send(data)
-    //     }
-    // )
-    // res.send('test')
     res.send('test')
 });
 

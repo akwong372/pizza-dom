@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link
-// } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Home from './components/home';
 import AddressForm from './components/AddressForm';
 
 const App = () => {
 
   const [store, setStore] = useState('');
   const [menu, setMenu] = useState('');
-  const [checkoutPage, setCheckoutPage] = useState(0);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e, history) => {
     e.preventDefault();
     const data = {
       Street: e.target[0].value,
@@ -28,7 +27,7 @@ const App = () => {
           console.log(response.data);
           setStore(response.data.storeData.result.Stores[0]);
           setMenu(response.data.menuData.result);
-          setCheckoutPage(1);
+          history.push('/home');
         } else {
           console.log('invalid address')
         }
@@ -38,20 +37,30 @@ const App = () => {
       })
   };
 
-  const renderPage = pageNum => {
-    switch (pageNum) {
-      case 0:
-        return <AddressForm handleSubmit={handleSubmit} />
-      default:
-        return <AddressForm handleSubmit={handleSubmit} />
-    }
-  }
+  // const renderPage = pageNum => {
+  //   switch (pageNum) {
+  //     case 0:
+  //       return <AddressForm handleSubmit={handleSubmit} />
+  //     default:
+  //       return <AddressForm handleSubmit={handleSubmit} />
+  //   }
+  // }
 
   return (
     <div className="App">
-      {renderPage(checkoutPage)}
+      {/* {renderPage(checkoutPage)} */}
 
       {JSON.stringify(store)}
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <AddressForm handleSubmit={handleSubmit} />
+          </Route>
+          <Route exact path="/home">
+            <Home storeID={store.StoreID}/>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
