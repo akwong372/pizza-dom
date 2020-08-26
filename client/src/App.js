@@ -5,7 +5,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Home from './components/home';
+import CustomerForm from './components/CustomerForm';
 import AddressForm from './components/AddressForm';
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
   const [store, setStore] = useState('');
   const [menu, setMenu] = useState('');
 
-  const handleSubmit = (e, history) => {
+  const handleAddress = (e, history) => {
     e.preventDefault();
     const data = {
       Street: e.target[0].value,
@@ -27,7 +27,7 @@ const App = () => {
           console.log(response.data);
           setStore(response.data.storeData.result.Stores[0]);
           setMenu(response.data.menuData.result);
-          history.push('/home');
+          history.push('/customer-form');
         } else {
           console.log('invalid address')
         }
@@ -37,14 +37,22 @@ const App = () => {
       })
   };
 
-  // const renderPage = pageNum => {
-  //   switch (pageNum) {
-  //     case 0:
-  //       return <AddressForm handleSubmit={handleSubmit} />
-  //     default:
-  //       return <AddressForm handleSubmit={handleSubmit} />
-  //   }
-  // }
+  const handleCustomer = e => {
+    e.preventDefault();
+    const data = {
+      firstName: e.target[0].value,
+      lastName: e.target[1].value,
+      phone: e.target[2].value,
+      email: e.target[3].value
+    }
+    axios.post('/customer-form', data)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   return (
     <div className="App">
@@ -54,10 +62,10 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <AddressForm handleSubmit={handleSubmit} />
+            <AddressForm handleSubmit={handleAddress} />
           </Route>
-          <Route exact path="/home">
-            <Home storeID={store.StoreID}/>
+          <Route exact path="/customer-form">
+            <CustomerForm storeID={store.StoreID} handleSubmit={handleCustomer} />
           </Route>
         </Switch>
       </Router>
