@@ -85,7 +85,7 @@ app.post('/confirm-order', (req, res) => {
     //         res.send(result);
     //     }
     // );
-    res.send('ok')
+    res.send('ok')//comment this and uncomment above to enable payment on last page
 });
 
 app.listen(port, console.log(`Listening on port ${port}`));
