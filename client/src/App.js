@@ -8,11 +8,12 @@ import {
 import CustomerForm from './components/CustomerForm';
 import AddressForm from './components/AddressForm';
 import PaymentForm from './components/PaymentForm';
+import ConfirmOrder from './components/ConfirmOrder';
 
 const App = () => {
 
   const [store, setStore] = useState('');
-  const [menu, setMenu] = useState('');
+  const [price, setPrice] = useState({});
 
   const handleAddress = (e, history) => {
     e.preventDefault();
@@ -27,7 +28,6 @@ const App = () => {
         if (response.data.storeData.success) {
           console.log(response.data);
           setStore(response.data.storeData.result.Stores[0]);
-          setMenu(response.data.menuData.result);
           history.push('/customer-form');
         } else {
           console.log('invalid address')
@@ -48,7 +48,8 @@ const App = () => {
     }
     axios.post('/customer-form', data)
       .then(response => {
-        console.log(response);
+        console.log(response)
+        setPrice({...response.data.result.Order.AmountsBreakdown});
         history.push('/payment-form')
       })
       .catch(err => {
@@ -69,18 +70,27 @@ const App = () => {
     axios.post('/payment-form', data)
       .then(response => {
         console.log(response);
-        history.push('/payment-form')
+        history.push('/confirm-order')
       })
       .catch(err => {
         console.log(err);
       });
-  }
+  };
+
+  const handleConfirm = () => {
+    axios.post('/confirm-order', {})
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="App">
-      {/* {renderPage(checkoutPage)} */}
-
-      {store.StoreID}
+    {store && <div>Ordering from Dominos store ID: {store.StoreID}</div>}
+    {store && <div>{store.AddressDescription}</div>}
       <Router>
         <Switch>
           <Route exact path="/">
@@ -92,10 +102,13 @@ const App = () => {
           <Route exact path="/payment-form">
             <PaymentForm storeID={store.StoreID} handleSubmit={handlePayment} />
           </Route>
+          <Route exact path="/confirm-order">
+            <ConfirmOrder handleSubmit={handleConfirm} foodTotal={price.FoodAndBeverage} tax={price.Tax} delivery={price.DeliveryFee} savings={price.Savings} total={price.Customer}/>
+          </Route>
         </Switch>
       </Router>
     </div>
   );
-}
+};
 
 export default App;

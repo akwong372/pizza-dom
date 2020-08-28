@@ -14,7 +14,7 @@ const CustomerForm = props => {
                 <button type='submit'>submit</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
 export default CustomerForm;

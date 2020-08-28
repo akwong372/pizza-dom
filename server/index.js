@@ -26,8 +26,7 @@ app.post('/', (req, res) => {
             myStore = new pizzapi.Store({});
             myStore.ID = storeID;
             myStore.getMenu(data => {
-                // console.log(data.menuData);
-                res.send({ storeData, menuData: data.menuData})
+                res.send({ storeData, menuData: data.menuData })
             })
         }
     );
@@ -57,28 +56,36 @@ app.post('/customer-form', (req, res) => {
         code: '9175'
     });//"Any Large Specialty Pizza" at 16.99
     order.addCoupon(specialtyPizzaCoupon);
-    
-    order.price(price => console.log(price.result.Order.Amounts))
+
     order.validate(
         result => {
-            order = result;
-            res.send(result);
+            console.log(result)
         }
     );
-})
+    order.price(price => res.send(price));
+});
 
 app.post('/payment-form', (req, res) => {
-    console.log(order)
-    console.log(req.body)  
     const expiration = req.body.month + req.body.year;
-    let cardInfo = new pizzapi.Payment();
-    // cardInfo.Amount = order.Amounts.Customer;
+    let cardInfo = new order.PaymentObject();
+    cardInfo.Amount = order.Amounts.Customer;
     cardInfo.Number = req.body.Number;
     cardInfo.CardType = order.validateCC(req.body.Number);
     cardInfo.Expiration = expiration;
     cardInfo.SecurityCode = req.body.SecurityCode;
     cardInfo.PostalCode = req.body.PostalCode;
-    res.send(cardInfo)
-})
+    order.Payments.push(cardInfo)
+    res.send(cardInfo);
+});
+
+app.post('/confirm-order', (req, res) => {
+    // order.place(
+    //     (result) => {
+    //         console.log("Order placed!");
+    //         res.send(result);
+    //     }
+    // );
+    res.send('ok')
+});
 
 app.listen(port, console.log(`Listening on port ${port}`));

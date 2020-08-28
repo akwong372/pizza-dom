@@ -3,7 +3,7 @@ import InputGroup from './InputGroup';
 import { useHistory } from 'react-router-dom';
 
 const AddressForm = props => {
-    let history = useHistory()
+    let history = useHistory();
     return (
         <div>
             <form onSubmit={e => { e.persist(); props.handleSubmit(e, history) }}>
@@ -14,7 +14,7 @@ const AddressForm = props => {
                 <button type='submit'>submit</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
 export default AddressForm;
