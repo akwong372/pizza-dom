@@ -1,12 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const pizzapi = require('pizzapi');
+const pizzapi = require('dominos');
 const port = process.env.PORT || 5000;
 
-// let order = new pizzapi.Order({
-//     deliveryMethod: 'Delivery'
-// }); //only create order after have all info?
+let order = null;
 let address = null;
 let customer = null;
 let storeID = null;
@@ -25,11 +23,11 @@ app.post('/', (req, res) => {
         'Delivery',
         (storeData) => {
             storeID = storeData.result.Stores[0].StoreID;
-            // order.storeID = storeID;
             myStore = new pizzapi.Store({});
             myStore.ID = storeID;
-            myStore.getMenu(menuData => {
-                res.send({ storeData, menuData });
+            myStore.getMenu(data => {
+                // console.log(data.menuData);
+                res.send({ storeData, menuData: data.menuData})
             })
         }
     );
@@ -41,9 +39,46 @@ app.post('/customer-form', (req, res) => {
         ...req.body
     }
     customer = new pizzapi.Customer(customerData);
-    // order.FirstName = customerData.firstName;
-    // order.LastName = 
-    res.send(order)
+    order = new pizzapi.Order(
+        {
+            customer: customer,
+            storeID: myStore.ID,
+            deliveryMethod: 'Delivery'
+        }
+    );
+
+    const cheeseSteakPizza = new pizzapi.Item({
+        code: 'P14IREPH',
+        quantity: 1
+    }); //Large (14") Hand Tossed Philly Cheese Steak
+    order.addItem(cheeseSteakPizza);
+
+    const specialtyPizzaCoupon = new pizzapi.Coupon({
+        code: '9175'
+    });//"Any Large Specialty Pizza" at 16.99
+    order.addCoupon(specialtyPizzaCoupon);
+    
+    order.price(price => console.log(price.result.Order.Amounts))
+    order.validate(
+        result => {
+            order = result;
+            res.send(result);
+        }
+    );
+})
+
+app.post('/payment-form', (req, res) => {
+    console.log(order)
+    console.log(req.body)  
+    const expiration = req.body.month + req.body.year;
+    let cardInfo = new pizzapi.Payment();
+    // cardInfo.Amount = order.Amounts.Customer;
+    cardInfo.Number = req.body.Number;
+    cardInfo.CardType = order.validateCC(req.body.Number);
+    cardInfo.Expiration = expiration;
+    cardInfo.SecurityCode = req.body.SecurityCode;
+    cardInfo.PostalCode = req.body.PostalCode;
+    res.send(cardInfo)
 })
 
 app.listen(port, console.log(`Listening on port ${port}`));

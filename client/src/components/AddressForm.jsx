@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 
 const AddressForm = props => {
     let history = useHistory()
-    console.log(history)
     return (
         <div>
             <form onSubmit={e => { e.persist(); props.handleSubmit(e, history) }}>

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import CustomerForm from './components/CustomerForm';
 import AddressForm from './components/AddressForm';
+import PaymentForm from './components/PaymentForm';
 
 const App = () => {
 
@@ -23,7 +24,7 @@ const App = () => {
     };
     axios.post('/', data)
       .then(response => {
-        if (response.data.menuData && response.data.storeData) {
+        if (response.data.storeData.success) {
           console.log(response.data);
           setStore(response.data.storeData.result.Stores[0]);
           setMenu(response.data.menuData.result);
@@ -37,7 +38,7 @@ const App = () => {
       })
   };
 
-  const handleCustomer = e => {
+  const handleCustomer = (e, history) => {
     e.preventDefault();
     const data = {
       firstName: e.target[0].value,
@@ -48,6 +49,27 @@ const App = () => {
     axios.post('/customer-form', data)
       .then(response => {
         console.log(response);
+        history.push('/payment-form')
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const handlePayment = (e, history) => {
+    e.preventDefault();
+    console.log(e.target)
+    const data = {
+      Number: e.target[0].value,
+      SecurityCode: e.target[1].value,
+      PostalCode: e.target[2].value,
+      month: e.target[3].value,
+      year: e.target[4].value.slice(2)
+    }
+    axios.post('/payment-form', data)
+      .then(response => {
+        console.log(response);
+        history.push('/payment-form')
       })
       .catch(err => {
         console.log(err);
@@ -58,7 +80,7 @@ const App = () => {
     <div className="App">
       {/* {renderPage(checkoutPage)} */}
 
-      {JSON.stringify(store)}
+      {store.StoreID}
       <Router>
         <Switch>
           <Route exact path="/">
@@ -66,6 +88,9 @@ const App = () => {
           </Route>
           <Route exact path="/customer-form">
             <CustomerForm storeID={store.StoreID} handleSubmit={handleCustomer} />
+          </Route>
+          <Route exact path="/payment-form">
+            <PaymentForm storeID={store.StoreID} handleSubmit={handlePayment} />
           </Route>
         </Switch>
       </Router>
