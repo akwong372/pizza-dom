@@ -2,7 +2,7 @@ import React from 'react';
 
 const ConfirmOrder = props => {
     return (
-        <div>
+        <div className="form-inputs">
             <ul>
                 <li>food total: {Number(props.foodTotal) + Number(props.savings)}</li>
                 <li>tax: {props.tax}</li>

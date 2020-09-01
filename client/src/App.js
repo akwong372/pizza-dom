@@ -5,6 +5,8 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Header from './components/Header';
+import Footer from './components/Footer';
 import CustomerForm from './components/CustomerForm';
 import AddressForm from './components/AddressForm';
 import PaymentForm from './components/PaymentForm';
@@ -49,7 +51,7 @@ const App = () => {
     axios.post('/customer-form', data)
       .then(response => {
         console.log(response)
-        setPrice({...response.data.result.Order.AmountsBreakdown});
+        setPrice({ ...response.data.result.Order.AmountsBreakdown });
         history.push('/payment-form')
       })
       .catch(err => {
@@ -89,8 +91,7 @@ const App = () => {
 
   return (
     <div className="App">
-    {store && <div>Ordering from Dominos store ID: {store.StoreID}</div>}
-    {store && <div>{store.AddressDescription}</div>}
+      <Header />
       <Router>
         <Switch>
           <Route exact path="/">
@@ -103,10 +104,15 @@ const App = () => {
             <PaymentForm storeID={store.StoreID} handleSubmit={handlePayment} />
           </Route>
           <Route exact path="/confirm-order">
-            <ConfirmOrder handleSubmit={handleConfirm} foodTotal={price.FoodAndBeverage} tax={price.Tax} delivery={price.DeliveryFee} savings={price.Savings} total={price.Customer}/>
+            <ConfirmOrder handleSubmit={handleConfirm} foodTotal={price.FoodAndBeverage} tax={price.Tax} delivery={price.DeliveryFee} savings={price.Savings} total={price.Customer} />
           </Route>
         </Switch>
       </Router>
+      {store && <div className="store-info">
+        <div>Ordering from Dominos store ID: {store.StoreID}</div>
+        <div>{store.AddressDescription}</div>
+      </div>}
+      <Footer />
     </div>
   );
 };

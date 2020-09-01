@@ -19,7 +19,7 @@ const PaymentForm = props => {
     })
 
     return (
-        <div>
+        <div className="form-inputs">
             <form onSubmit={e => { e.persist(); props.handleSubmit(e, history) }}>
                 <InputGroup htmlFor={'cardNumber'} labelText={'Card Number'} type={'text'} id={'cardNumber'} placeholder={'Card Number'} />
                 <InputGroup htmlFor={'cvv'} labelText={'CVV'} type={'text'} id={'cvv'} placeholder={'CVV'} />

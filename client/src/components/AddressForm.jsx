@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 const AddressForm = props => {
     let history = useHistory();
     return (
-        <div>
+        <div className="form-inputs">
             <form onSubmit={e => { e.persist(); props.handleSubmit(e, history) }}>
                 <InputGroup htmlFor={'street'} labelText={'Street'} type={'text'} id={'street'} placeholder={'Street'} />
                 <InputGroup htmlFor={'city'} labelText={'City'} type={'text'} id={'city'} placeholder={'City'} />
