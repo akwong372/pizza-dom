@@ -33,16 +33,39 @@ body {
 
 .footer {
     @extend .bar;
+    background-color: #DBDBDB;
     bottom: 0;
     height: 3rem;
     small {
-        color: black;
+        color: #4A4A4A;
         text-align: center;
         margin: 10px;
     }
 }
 
+.container {
+    display: grid;
+    grid-template-columns: 20em;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "forms forms forms"
+        "store-data store-data store-data";
+    justify-items: center;
+}
+
+.store-info {
+    grid-area: store-data;
+    position: relative;
+    line-height: 2rem;
+    text-align: center;
+    // width: 50%;
+    top: 15rem;
+    // left: 3rem;
+    margin: 0 auto;
+}
+
 .form-inputs {
+    grid-area: forms;
     position: relative;
     line-height: 2rem;
     width: 50%;
@@ -50,11 +73,11 @@ body {
     margin: 0 auto;
     label{
         display: inline-block;
-        width: 40%;
+        width: 35%;
         text-align: right;
     }
     input {
-        width: 30%;
+        width: 35%;
         display: inline-block;
     }
     button{
@@ -63,12 +86,14 @@ body {
         margin: -2rem -3rem;
         position: relative;
         top: 50%; 
-        left: 50%;
+        left: 45%;
         background-color: #E31A35;
         transition: background-color .3s linear;
         color: #FFFFFF;
         cursor: pointer;
         text-decoration: none;
+        border: 0;
+        border-radius: 5px;
         &:hover {
             background-color: #AB1428;
         }

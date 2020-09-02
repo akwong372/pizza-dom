@@ -14,7 +14,7 @@ import ConfirmOrder from './components/ConfirmOrder';
 
 const App = () => {
 
-  const [store, setStore] = useState('');
+  const [store, setStore] = useState({});
   const [price, setPrice] = useState({});
 
   const handleAddress = (e, history) => {
@@ -91,27 +91,29 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <AddressForm handleSubmit={handleAddress} />
-          </Route>
-          <Route exact path="/customer-form">
-            <CustomerForm storeID={store.StoreID} handleSubmit={handleCustomer} />
-          </Route>
-          <Route exact path="/payment-form">
-            <PaymentForm storeID={store.StoreID} handleSubmit={handlePayment} />
-          </Route>
-          <Route exact path="/confirm-order">
-            <ConfirmOrder handleSubmit={handleConfirm} foodTotal={price.FoodAndBeverage} tax={price.Tax} delivery={price.DeliveryFee} savings={price.Savings} total={price.Customer} />
-          </Route>
-        </Switch>
-      </Router>
-      {store && <div className="store-info">
-        <div>Ordering from Dominos store ID: {store.StoreID}</div>
-        <div>{store.AddressDescription}</div>
-      </div>}
+      <div className="container">
+        <Header />
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <AddressForm handleSubmit={handleAddress} />
+            </Route>
+            <Route exact path="/customer-form">
+              <CustomerForm storeID={store.StoreID} handleSubmit={handleCustomer} />
+            </Route>
+            <Route exact path="/payment-form">
+              <PaymentForm storeID={store.StoreID} handleSubmit={handlePayment} />
+            </Route>
+            <Route exact path="/confirm-order">
+              <ConfirmOrder handleSubmit={handleConfirm} foodTotal={price.FoodAndBeverage} tax={price.Tax} delivery={price.DeliveryFee} savings={price.Savings} total={price.Customer} />
+            </Route>
+          </Switch>
+        </Router>
+        {store.StoreID && <div className="store-info">
+          <div>Ordering from Dominos store ID: {store.StoreID}</div>
+          <div>{store.AddressDescription}</div>
+        </div>}
+      </div>
       <Footer />
     </div>
   );

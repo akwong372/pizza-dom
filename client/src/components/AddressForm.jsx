@@ -11,7 +11,7 @@ const AddressForm = props => {
                 <InputGroup htmlFor={'city'} labelText={'City'} type={'text'} id={'city'} placeholder={'City'} />
                 <InputGroup htmlFor={'state'} labelText={'State'} type={'text'} id={'state'} placeholder={'State'} />
                 <InputGroup htmlFor={'zipcode'} labelText={'Zipcode'} type={'text'} id={'zipcode'} placeholder={'Zipcode'} />
-                <button type='submit'>submit</button>
+                <button type='submit'>Submit</button>
             </form>
         </div>
     );

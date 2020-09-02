@@ -40,17 +40,45 @@ body {
 }
 
 .footer {
+  background-color: #DBDBDB;
   bottom: 0;
   height: 3rem;
 }
 
 .footer small {
-  color: black;
+  color: #4A4A4A;
   text-align: center;
   margin: 10px;
 }
 
+.container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 20em;
+      grid-template-columns: 20em;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+      grid-template-areas: "forms forms forms" "store-data store-data store-data";
+  justify-items: center;
+}
+
+.store-info {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: store-data;
+  position: relative;
+  line-height: 2rem;
+  text-align: center;
+  top: 15rem;
+  margin: 0 auto;
+}
+
 .form-inputs {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: forms;
   position: relative;
   line-height: 2rem;
   width: 50%;
@@ -60,12 +88,12 @@ body {
 
 .form-inputs label {
   display: inline-block;
-  width: 40%;
+  width: 35%;
   text-align: right;
 }
 
 .form-inputs input {
-  width: 30%;
+  width: 35%;
   display: inline-block;
 }
 
@@ -75,7 +103,7 @@ body {
   margin: -2rem -3rem;
   position: relative;
   top: 50%;
-  left: 50%;
+  left: 45%;
   background-color: #E31A35;
   -webkit-transition: background-color .3s linear;
   transition: background-color .3s linear;
