@@ -13,6 +13,10 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -22,6 +26,7 @@ body {
 }
 
 .header {
+  margin: 0 auto;
   top: 0;
   background-color: #016491;
   -webkit-box-shadow: 0px 3px 20px #888888;
@@ -51,6 +56,21 @@ body {
   margin: 10px;
 }
 
+.about-link {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: forms;
+  width: 4em;
+  text-decoration: none;
+  margin-left: auto;
+  color: inherit;
+}
+
+.about-link:hover {
+  text-decoration: underline;
+}
+
 .container {
   display: -ms-grid;
   display: grid;
@@ -60,6 +80,19 @@ body {
       grid-template-rows: auto;
       grid-template-areas: "forms forms forms" "store-data store-data store-data";
   justify-items: center;
+}
+
+.about-text {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: forms;
+  justify-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  top: 10rem;
 }
 
 .store-info {
@@ -110,12 +143,17 @@ body {
   color: #FFFFFF;
   cursor: pointer;
   text-decoration: none;
+  text-transform: uppercase;
   border: 0;
   border-radius: 5px;
 }
 
 .form-inputs button:hover {
   background-color: #AB1428;
+}
+
+.result-list {
+  list-style-type: none;
 }
 
 .filter-white {
