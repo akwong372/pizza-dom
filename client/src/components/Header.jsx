@@ -5,23 +5,19 @@ import {
 }
     from 'react-router-dom';
 
-const Header = props => {
+const Header = () => {
     return (
         <header className="header">
             <div className="header-items">
                 <img src="pizza-slice.svg" className="filter-white" alt="pizza icon" />
                 Pizza Thing
         </div>
-            {/* <a href="/about" className="about-link">About</a> */}
-            <Router>
-                <Link
-                    className="about-link"
-                    to={{
-                        pathname: "/about",
-                        state: props.storeData
-                    }}
-                >about</Link>
-            </Router>
+            <Link
+                className="about-link"
+                to={{
+                    pathname: "/about"
+                }}
+            >about</Link>
         </header>
     );
 };

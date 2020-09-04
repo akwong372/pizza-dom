@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {
   BrowserRouter as Router,
-  Switch,
   Route
 } from "react-router-dom";
 import Header from './components/Header';
@@ -96,24 +95,30 @@ const App = () => {
       });
   };
 
+  const handleGoBack = history => {
+    history.goBack();
+  };
+
   return (
-    <div className="App">
-      <div className="container">
-        <Header storeData={store} />
-        <Router>
+    <Router>
+      <div className="App">
+        <div className="container">
+          <Header />
+
           <Route exact path="/" render={() => <AddressForm handleSubmit={handleAddress} />} />
           <Route exact path="/customer-form" render={() => <CustomerForm storeID={store.StoreID} handleSubmit={handleCustomer} />} />
           <Route exact path="/payment-form" render={() => <PaymentForm storeID={store.StoreID} handleSubmit={handlePayment} />} />
           <Route exact path="/confirm-order" render={() => <ConfirmOrder handleSubmit={handleConfirm} foodTotal={price.FoodAndBeverage} tax={price.Tax} delivery={price.DeliveryFee} savings={price.Savings} total={price.Customer} />} />
-          <Route exact path="/about" component={About} />
-        </Router>
-        {store.StoreID ? <div className="store-info">
-          <div>Ordering from Dominos store ID: {store.StoreID}</div>
-          <div>{store.AddressDescription}</div>
-        </div> : <div className="store-info">No Store Currently Selected</div>}
+          <Route exact path="/about" render={() => <About handleClick={handleGoBack} />} />
+
+          {store.StoreID ? <div className="store-info">
+            <div>Ordering from Dominos store ID: {store.StoreID}</div>
+            <div>{store.AddressDescription}</div>
+          </div> : <div className="store-info">No Store Currently Selected</div>}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Router>
   );
 };
 

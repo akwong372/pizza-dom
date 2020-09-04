@@ -79,9 +79,7 @@ body {
     position: relative;
     line-height: 2rem;
     text-align: center;
-    // width: 50%;
     top: 15rem;
-    // left: 3rem;
     margin: 0 auto;
 }
 
@@ -101,24 +99,25 @@ body {
         width: 35%;
         display: inline-block;
     }
-    button{
-        height: 1.5rem; 
-        width: 10rem; 
-        margin: -2rem -3rem;
-        position: relative;
-        top: 50%; 
-        left: 45%;
-        background-color: #E31A35;
-        transition: background-color .3s linear;
-        color: #FFFFFF;
-        cursor: pointer;
-        text-decoration: none;
-        text-transform: uppercase;
-        border: 0;
-        border-radius: 5px;
-        &:hover {
-            background-color: #AB1428;
-        }
+}
+
+button{
+    height: 1.5rem; 
+    width: 10rem; 
+    margin: -2rem -3rem;
+    position: relative;
+    top: 50%; 
+    left: 45%;
+    background-color: #E31A35;
+    transition: background-color .3s linear;
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 5px;
+    &:hover {
+        background-color: #AB1428;
     }
 }
 

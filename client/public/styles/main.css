@@ -130,7 +130,7 @@ body {
   display: inline-block;
 }
 
-.form-inputs button {
+button {
   height: 1.5rem;
   width: 10rem;
   margin: -2rem -3rem;
@@ -148,7 +148,7 @@ body {
   border-radius: 5px;
 }
 
-.form-inputs button:hover {
+button:hover {
   background-color: #AB1428;
 }
 
