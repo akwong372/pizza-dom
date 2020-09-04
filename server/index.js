@@ -18,16 +18,21 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
     address = new pizzapi.Address(req.body);
+    console.log(address)
     pizzapi.Util.findNearbyStores(
         address,
         'Delivery',
         (storeData) => {
-            storeID = storeData.result.Stores[0].StoreID;
-            myStore = new pizzapi.Store({});
-            myStore.ID = storeID;
-            myStore.getMenu(data => {
-                res.send({ storeData, menuData: data.menuData })
-            })
+            if (storeData.result.Stores.length >= 1) {
+                storeID = storeData.result.Stores[0].StoreID;
+                myStore = new pizzapi.Store({});
+                myStore.ID = storeID;
+                myStore.getMenu(data => {
+                    res.send({ storeData, menuData: data.menuData })
+                });
+            } else {
+                res.send(false);
+            }
         }
     );
 });

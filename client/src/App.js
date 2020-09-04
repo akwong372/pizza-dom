@@ -3,8 +3,7 @@ import axios from 'axios';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  useLocation
+  Route
 } from "react-router-dom";
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -35,7 +34,7 @@ const App = () => {
     };
     axios.post('/', data)
       .then(response => {
-        if (response.data.storeData.success) {
+        if (response.data.storeData) {
           console.log(response.data);
           setStore(response.data.storeData.result.Stores[0]);
           history.push('/customer-form');
@@ -121,11 +120,10 @@ const App = () => {
             </Route>
           </Switch>
         </Router>
-        {store.StoreID && <div className="store-info">
+        {store.StoreID ? <div className="store-info">
           <div>Ordering from Dominos store ID: {store.StoreID}</div>
           <div>{store.AddressDescription}</div>
-        </div> }
-        {window.location.pathname !== '/about' && <div className="store-info">No Store Currently Selected</div>}
+        </div> : <div className="store-info">No Store Currently Selected</div>}
       </div>
       <Footer />
     </div>
