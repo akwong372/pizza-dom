@@ -98,27 +98,14 @@ const App = () => {
 
   return (
     <div className="App">
-    {console.log(window.location.pathname)}
       <div className="container">
-        <Header />
+        <Header storeData={store} />
         <Router>
-          <Switch>
-            <Route exact path="/">
-              <AddressForm handleSubmit={handleAddress} />
-            </Route>
-            <Route exact path="/customer-form">
-              <CustomerForm storeID={store.StoreID} handleSubmit={handleCustomer} />
-            </Route>
-            <Route exact path="/payment-form">
-              <PaymentForm storeID={store.StoreID} handleSubmit={handlePayment} />
-            </Route>
-            <Route exact path="/confirm-order">
-              <ConfirmOrder handleSubmit={handleConfirm} foodTotal={price.FoodAndBeverage} tax={price.Tax} delivery={price.DeliveryFee} savings={price.Savings} total={price.Customer} />
-            </Route>
-            <Route exact path="/about">
-              <About/>
-            </Route>
-          </Switch>
+          <Route exact path="/" render={() => <AddressForm handleSubmit={handleAddress} />} />
+          <Route exact path="/customer-form" render={() => <CustomerForm storeID={store.StoreID} handleSubmit={handleCustomer} />} />
+          <Route exact path="/payment-form" render={() => <PaymentForm storeID={store.StoreID} handleSubmit={handlePayment} />} />
+          <Route exact path="/confirm-order" render={() => <ConfirmOrder handleSubmit={handleConfirm} foodTotal={price.FoodAndBeverage} tax={price.Tax} delivery={price.DeliveryFee} savings={price.Savings} total={price.Customer} />} />
+          <Route exact path="/about" component={About} />
         </Router>
         {store.StoreID ? <div className="store-info">
           <div>Ordering from Dominos store ID: {store.StoreID}</div>
