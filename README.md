@@ -1,4 +1,4 @@
-# Pizza Dom 🍕 
+# Pizza Thing 🍕 
 
 ![App gif](https://i.imgur.com/9HJF2Vs.gif)
 
